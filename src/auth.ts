@@ -1,4 +1,4 @@
-import NextAuth, { type DefaultSession } from "next-auth";
+import NextAuth, { type DefaultSession, type NextAuthOptions } from "next-auth";
 import GitHub from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./lib/prisma";
@@ -11,7 +11,7 @@ declare module "next-auth" {
   }
 }
 
-export const authConfig = {
+export const authConfig: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GitHub({
@@ -27,7 +27,7 @@ export const authConfig = {
       return session;
     },
   },
-} as const;
+};
 
 export const { auth, signIn, signOut } = NextAuth(authConfig);
 
